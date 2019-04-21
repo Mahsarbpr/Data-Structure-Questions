@@ -1,0 +1,35 @@
+public class Solution {
+    public bool IsValid(string s) {
+        
+       var mystack = new Stack<char>();
+       var sCharArray = s.ToCharArray();
+       char top;
+        
+       char c;
+       for(int i=0;i<sCharArray.Count();i++){
+            c= sCharArray[i];
+            if(c.Equals("(") || c.Equals("[") || c.Equals("{")){
+                mystack.Push(c);
+            }
+            else if(c.Equals(")")){
+                top=mystack.Pop();
+                if(!top.Equals("("))
+                    return false;
+            }
+            else if(c.Equals("}")){
+                top = mystack.Pop();
+                if(!top.Equals("{"))
+                    return false;
+            }
+            else if(c.Equals("]")){
+                top=mystack.Pop();
+                if(!top.Equals("["))
+                    return false;
+            }
+            
+        }
+        if(mystack.Count()==0)
+            return true;
+        return false;
+    }
+}
