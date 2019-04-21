@@ -1,33 +1,27 @@
 public class Solution {
     public bool IsValid(string s) {
         
+       var paranthesisDict = new Dictionary<char,char>(){
+           {')','('},
+           {'}','{'},
+           {']','['}
+       };
        var mystack = new Stack<char>();
        var sCharArray = s.ToCharArray();
-       char top;
-        
+       char top='\0';
+    
        char c;
        for(int i=0;i<sCharArray.Count();i++){
             c= sCharArray[i];
-            if(c.Equals("(") || c.Equals("[") || c.Equals("{")){
+            if(paranthesisDict.ContainsValue(c)){
                 mystack.Push(c);
             }
-            else if(c.Equals(")")){
-                top=mystack.Pop();
-                if(!top.Equals("("))
+            else if(paranthesisDict.ContainsKey(c)){
+                top=mystack.Count()!=0?mystack.Pop():'\0';
+                if(paranthesisDict[c]!=top)
                     return false;
             }
-            else if(c.Equals("}")){
-                top = mystack.Pop();
-                if(!top.Equals("{"))
-                    return false;
-            }
-            else if(c.Equals("]")){
-                top=mystack.Pop();
-                if(!top.Equals("["))
-                    return false;
-            }
-            
-        }
+       }
         if(mystack.Count()==0)
             return true;
         return false;
