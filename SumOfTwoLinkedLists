@@ -19,7 +19,7 @@ public class Solution {
         else if(l2==null)
             return l1;
         else{
-            while(l1!=null || l2!=null){
+            while(l1!=null && l2!=null){
                 sumValue= l1.val+l2.val+carry;
                 ListNode temp=new ListNode(sumValue%10);
                 carry=sumValue/10;
