@@ -1,0 +1,20 @@
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        var charS= s.ToCharArray();
+        var subs=String.Empty;
+        int i=0;
+        var subSLength=0;
+        while(i<charS.Length){//Lenght does not have (), question is which functions have()
+            if(subs.Contains(charS[i])){
+                subs=String.Empty;//Empty does not have (), String is capital S
+            }
+            else{
+                subs+=charS[i];
+                if(subs.Length>subSLength)
+                   subSLength = subs.Length;//ToCharArray not toCharArray
+            }
+            i++;
+        }
+        return subSLength;
+    }
+}
