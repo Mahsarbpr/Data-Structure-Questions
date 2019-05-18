@@ -1,0 +1,79 @@
+public class Solution {
+    public int[][] KClosest(int[][] points, int K) {
+        
+        
+        var pointDict= new Dictionary<double, int[]>();
+        var distance = new List<double>();
+        int i=0;
+        points.foreach(p=>{
+            distance[i]=Math.Sqrt(p[0]^2+p[1]^2);
+            pointDict.Add(distance[i],p);
+            i++;
+        });
+        
+        //FindMin
+        //Option 1: min heap
+        //Option 2: Sort and return
+    }
+    
+}
+public class Node{
+    public int data;
+    public Node Left;//Node bayad bashe Aya?
+    public Node Right;
+    public Node(int d){
+        data=d;
+        Left=null;
+        Right=null;
+        Parent= null;
+    }
+}
+public class MinHeap{
+    
+    public Node root;
+    public Node insert(int n){
+        var nodeToInsert= new Node(n);
+        if(root==null){
+            return root;
+        }
+        else{
+            var rootCopy= root;
+            var leftChild= rootCopy.Left;
+            if(leftChild==null){
+                rootCopy.Left=nodToInsert;
+            }
+            while(leftChild.Right!=null){
+                leftChild=leftChild.Right;
+            }
+            leftChild.Right=nodeToInsert;
+            BuildUp(leftChild);//aya akhario bedim mire ta root?
+            
+            return root;
+        }
+    }
+    public int Pop(){
+        var min=root.data;
+        var leftChild= root.Left;
+        if(leftChild==null){
+                //root.Right
+            
+            }
+            while(leftChild.Right!=null){
+                leftChild=leftChild.Right;
+            }
+    }
+    public Node Buildup(Node root){
+        while(leftChild.Right.data<leftChild.data && leftChild!=null){
+                Swap(leftChild.Right.data,leftChild.data);
+                leftChild=leftChild.Parent;//is it correct?
+            }
+    }
+    public void Swap(int a, int b){
+        var temp;
+        temp=a;
+        a=b;
+        b=temp;
+    }
+    
+    
+}
