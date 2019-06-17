@@ -1,0 +1,25 @@
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+        
+        var numsLength = nums.Length;
+        var L = new int[numsLength];
+        var R = new int[numsLength];
+        
+        L[0]=1;
+        //Computes multiplication elements previous to current element
+        for(var i =1;i<numsLength;i++){
+            L[i]= L[i-1]*nums[i-1];
+        }
+        
+        R[numsLength-1]=1;
+        //Computes multiplication elements after current element
+        for(var i=numsLength-2;i>=0;i--){
+            R[i]=R[i+1]*nums[i+1];
+        }
+        
+        for(int i=0;i<numsLength;i++){
+            nums[i]=L[i]*R[i];
+        }
+        return nums;
+    }
+}
