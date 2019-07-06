@@ -1,0 +1,17 @@
+public class Solution {
+    public int[] SortArrayByParity(int[] A) {
+        var alist= A.OfType<int>().ToList();
+        
+        var odd=new List<int>();
+        var even=new List<int>();
+        
+        alist.ForEach(a=>{
+            if(a%2==0)
+                even.Add(a);
+            else odd.Add(a);
+        });
+        
+        even.AddRange(odd);
+        return even.ToArray();
+    }
+}
