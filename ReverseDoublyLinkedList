@@ -1,0 +1,14 @@
+static DoublyLinkedListNode reverse(DoublyLinkedListNode head) {
+
+        DoublyLinkedListNode temp=null;
+        var headRep=head;
+        while(headRep!=null){
+            temp=headRep.prev;
+            headRep.prev=headRep.next;
+            headRep.next=temp;
+            headRep=headRep.prev; 
+        }
+        if(temp!=null)
+            head=temp.prev;
+        return head;
+    }
