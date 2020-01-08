@@ -1,0 +1,16 @@
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        
+        var hashMap = new Dictionary<int, int>();
+        for(var i=0 ; i < nums.Length ; i++){
+            var compliment = target - nums[i];
+            var hasCompliment = hashMap.ContainsValue(compliment);
+            if(hasCompliment ){
+                var keyC= hashMap.FirstOrDefault(x=>x.Value==compliment).Key;
+                return new int[] {i, keyC};
+            }
+            hashMap.Add(i, nums[i]);
+        }
+        return null;
+    }
+}
