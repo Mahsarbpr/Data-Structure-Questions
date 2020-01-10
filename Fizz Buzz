@@ -15,3 +15,33 @@ public class Solution {
         return output;
     }
 }
+
+
+
+
+//Smarter Solution would be to use hashmap, because if number of fizz buzz increase lets say if we add 7 to the question as well, in above 
+//solution we need to add few other conditions. If we add 3, 5 as hashmap key and fizz and buzz as their value, we would only change one
+//line in future code.
+
+public class Solution {
+    public IList<string> FizzBuzz(int n) {
+        
+        var outputList = new List<string>();
+        var fizzbuzzDictionary = new Dictionary<int, string>{
+            {3,"Fizz"},
+            {5,"Buzz"}
+        };
+        for(var i = 1; i <= n; i++)
+        {
+            string output="";
+            foreach(var fbkey in fizzbuzzDictionary.Keys){
+                if(i%fbkey == 0)
+                    output += fizzbuzzDictionary[fbkey];
+            }
+            if(string.IsNullOrEmpty(output))
+                output+=i.ToString();
+            outputList.Add(output);
+        }
+        return outputList;
+    }
+}
