@@ -1,0 +1,8 @@
+public class Solution {
+    public int SingleNumber(int[] nums) {
+        var a=0;
+        for(var i = 0 ; i < nums.Count() ; i++)
+            a ^= nums[i];
+        return a;
+    }
+}
