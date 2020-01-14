@@ -1,0 +1,26 @@
+public class Solution {
+    public int[] NextGreaterElement(int[] nums1, int[] nums2) {
+        //question : does hash sorts after saving each key value
+        //I mean we may save not sorted but if we iterate through keys 
+        //is it sorted? NO IT DOES NOT, Thats SortedDictionary
+        var nums2Count = nums2.Count();
+        var nums1Count = nums1.Count();
+        var resultList = new int[nums1Count];
+        var nums2Dictionary = new Dictionary<int,int>();
+        for(var i = 0 ; i < nums2Count ; i++)
+            nums2Dictionary.Add(nums2[i],i);
+        
+        for(var i = 0 ; i < nums1Count ; i++){
+            var indexToStarSearchFromInNums2 = nums2Dictionary[nums1[i]];
+            for(var j = indexToStarSearchFromInNums2; j < nums2Count ; j++){
+                if(nums2[j] > nums1[i]){
+                    resultList[i] = nums2[j];
+                    break;
+                }
+            }
+            if(resultList[i]==0)
+                resultList[i] = -1;
+            }
+        return resultList;
+        }
+}
