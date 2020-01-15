@@ -1,0 +1,41 @@
+public class Solution {
+    public int[] Intersection(int[] nums1, int[] nums2) {
+        
+        var nums1Count = nums1.Count();
+        var nums2Count = nums2.Count();
+        
+        var hashNums= new Dictionary<int, int>();
+        if(nums1Count <= nums2Count){
+            hashNums = AddToHash(nums1);
+            return GetIntersections(nums2, hashNums);
+        }
+        else {
+            hashNums = AddToHash(nums2);
+            return GetIntersections(nums1, hashNums);
+             }
+    }
+    
+    public int[] GetIntersections(int[] nums, Dictionary<int,int> hash){
+        var interHash = new Dictionary<int, int>();
+        
+        for(var i = 0; i < nums.Count(); i++){
+            if(hash.ContainsKey(nums[i])){
+                if(!interHash.ContainsKey(nums[i]))
+                    interHash.Add(nums[i],i);
+            }
+        }
+                   
+        return interHash.Keys.ToArray();
+    }
+    
+    public Dictionary<int, int> AddToHash(int[] nums){
+        
+        var hash = new Dictionary<int, int>();
+        for(var i = 0; i<nums.Count(); i++){
+            if(!hash.ContainsKey(nums[i]))
+                hash.Add(nums[i],i);
+            else continue;
+        }
+        return hash;
+    }
+}
