@@ -1,0 +1,11 @@
+ public void MoveZeroes(int[] nums) {
+        
+        var lastNonZeroFoundAt = 0;
+        for( var i = 0; i < nums.Count(); i++){
+            if(nums[i]!=0)
+                nums[lastNonZeroFoundAt++] = nums[i];
+        }
+        for(var j = lastNonZeroFoundAt ; j < nums.Count(); j++)
+            nums[j] = 0;
+        
+    }
