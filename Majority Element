@@ -1,0 +1,15 @@
+public int MajorityElement(int[] nums) {
+        var n = nums.Count();
+        var hashNums = new Dictionary<int, int>();
+        for(var i=0; i<n; i++){
+            if(hashNums.ContainsKey(nums[i]))
+            {
+                hashNums[nums[i]]++;
+            }
+            else
+                hashNums.Add(nums[i],1);
+            if(hashNums[nums[i]] > n/2)
+                    return nums[i];
+        }
+        return 0;
+    }
