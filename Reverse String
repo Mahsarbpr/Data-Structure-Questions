@@ -1,0 +1,12 @@
+public class Solution {
+    public void ReverseString(char[] s) {
+        var length=s.Count();
+        var halfLength = length/2;
+        for(var i = 0; i < halfLength; ++i ){
+            char t;
+            t=s[i];
+            s[i]=s[length-1-i];
+            s[length-1-i]=t;
+        }
+    }
+}
