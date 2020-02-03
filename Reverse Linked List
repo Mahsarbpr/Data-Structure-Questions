@@ -5,7 +5,8 @@ public class Solution {
             return head;
         
         var p = ReverseList(head.next);
-        head.next.next=head;
+        head.next.next=head; //becasue we sent head.next to previous function, for example we sent 4->5->null returned 5 so we need to make
+                             //4.next.next to 4 which is going to be 4->5->4->null then set 4->next to null which result will be 5->4->null
         head.next=null;
         return p;
     }
