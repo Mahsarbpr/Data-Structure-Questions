@@ -1,0 +1,21 @@
+public class Solution {
+    public bool IsValid(string s) {
+        var charsOfS = s.ToCharArray();
+        var stack1 = new Stack();
+        var bracketDict = new Dictionary<char,char>(){
+            {'(',')'},
+            {'{','}'},
+            {'[',']'}
+        };
+        
+        foreach(char a in charsOfS){
+            if(bracketDict.Keys.Any(b=>b.Equals(a)) )
+                stack1.Push(a);
+            else if(stack1.Count!=0 && bracketDict[Convert.ToChar(stack1.Peek())].Equals(a)){
+                stack1.Pop();
+            }
+            else return false;
+        }
+        return stack1.Count==0;
+    }
+}
