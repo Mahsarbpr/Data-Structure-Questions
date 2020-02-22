@@ -1,0 +1,13 @@
+public class Solution {
+    public void Merge(int[] nums1, int m, int[] nums2, int n) {
+        
+        var left=m-1;
+        var right=n-1;
+        var p = m + n - 1;
+        while(left>=0 && right>=0)
+            nums1[p--]=(nums1[left]>nums2[right])?nums1[left--]:nums2[right--];
+        
+        Array.Copy(nums2, 0, nums1, 0, right+1);
+        
+    }
+}
