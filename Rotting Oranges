@@ -1,0 +1,70 @@
+
+//where to keep rotted oranges=> which data structure '
+//how to know row count and column count in an array
+//how to define tuple/struct
+//How to define queue in c#
+public class Solution {
+    public int OrangesRotting(int[][] grid) 
+    {
+        //to keep direction     
+        var dir = new int[][]{
+            new int[]{1,0},
+            new int[]{0,1},
+            new int[]{-1,0},
+            new int[]{0,-1}};
+        int count_fresh = 0;//need to count fresh oranges we will need it at the beginning and while changing fresh to rotted
+        //do the way algorithm works is that, in each we compute rotted oranges and add them to queue, but keep the size of rotted in that
+        //round, in the next round we only check fresh oranges around those number of routed oranges but keep adding to queue oranges
+        //that changed to rott(each round we only check adjacents to previous rotted oranges but keep adding new ones at the end of queue
+        // then next round we keep doing same from where we left)... untill queue is empty or count_fresh is zero 
+        var rottQueue = new Queue<IndexTuple>();
+        var rCount = grid.Length;
+        var cCount = grid[0].Length;
+        
+        for(var i=0;i<rCount;i++)
+            for(var j=0;j<cCount;j++){
+                if(grid[i][j]==2)
+                    rottQueue.Enqueue(new IndexTuple(i,j));
+                else if(grid[i][j]==1)
+                    count_fresh++;
+            }
+        if((rottQueue == null || rottQueue.Count==0) && count_fresh==0) return 0;
+        if((rottQueue == null || rottQueue.Count==0) && count_fresh>0) return -1;
+        var minCount=0;
+        
+        while(rottQueue!=null && rottQueue.Count>0)
+        {
+            var rottQueueSize = rottQueue.Count;
+            for(var i=0;i< rottQueueSize;i++){
+                var rotted = rottQueue.Peek();
+                for(int j=0;j<4;j++){
+                    var adjRow=rotted.row+dir[j][0];
+                    var adjCol =rotted.column+dir[j][1];
+                    if(adjRow>=0 && adjCol>=0 && adjRow < rCount && adjCol < cCount && grid[adjRow][adjCol]==1){
+                        rottQueue.Enqueue(new IndexTuple(adjRow,adjCol));
+                        grid[adjRow][adjCol] = 2;
+                        count_fresh--;
+                    }
+                }
+                rottQueue.Dequeue();
+            }
+            if(rottQueue.Count>0)
+                minCount++;
+        }
+        if(count_fresh>0) return -1;
+        return minCount;
+    }
+    public class IndexTuple{
+        public IndexTuple(int r, int c){
+            row=r;
+            column = c;
+        }
+        public IndexTuple()
+        {
+            row=0;
+            column=0;
+        }   
+        public int row;
+        public int column;
+    } 
+}
