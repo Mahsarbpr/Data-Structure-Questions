@@ -1,0 +1,28 @@
+public class Solution {
+    public int Reverse(int x) {
+       
+       var intStack = new Queue<int>();
+        var isNegative = false;
+        if(x==-2147483648)
+           return 0;
+        if(x<0){
+            isNegative = true;
+            x=System.Math.Abs(x);
+        }
+        
+        while(x>0){
+            intStack.Enqueue( x%10 );
+            x=x/10;
+        }
+        var sum=string.Empty;
+        while(intStack.Count>0)
+            sum+=intStack.Dequeue();
+        sum = isNegative?"-"+sum : sum;
+        try{
+        return Int32.Parse(sum);
+        }
+        catch(Exception e){
+            return 0;
+        }
+    }
+}
