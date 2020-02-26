@@ -1,0 +1,33 @@
+public class Solution {
+    public string MostCommonWord(string paragraph, string[] banned) {
+        
+        var wordDictionary = new Dictionary<string,int>();
+        var copyParagraph=string.Empty;
+        
+        for (int i = 0; i < paragraph.Length; i++)
+        {
+            if (!char.IsPunctuation(paragraph[i]))
+              copyParagraph+=paragraph[i];
+            else copyParagraph+=" ";
+        }
+        var wordsInParagraph = copyParagraph.Split(' ',StringSplitOptions.RemoveEmptyEntries).Select(s=>s.ToLower());
+        
+        foreach(var word in wordsInParagraph){
+            if(!banned.Any(a=>(a.Equals(word, StringComparison.OrdinalIgnoreCase))))             {
+                if(wordDictionary.ContainsKey(word))
+                    wordDictionary[word]++;
+                else wordDictionary.Add(word,1);
+            }
+        }
+        //need to learn linq for this case, finding max in dictionary values
+        var max =1;
+        var maxKey="";
+        foreach(var pair in wordDictionary){
+            if(pair.Value>=max){
+                max=pair.Value;
+                maxKey=pair.Key;
+            }
+        }
+        return maxKey;
+    }
+}
