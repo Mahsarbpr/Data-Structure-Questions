@@ -1,0 +1,32 @@
+public class Solution {
+    public Dictionary<string,int> dVDictionary;
+    public IList<string> SubdomainVisits(string[] cpdomains) {
+        
+        dVDictionary = new Dictionary<string,int>();
+        foreach(var cpdomain in cpdomains){
+            var intDomain = cpdomain.Split(' ');
+            var value=Int32.Parse(intDomain[0]);
+            var domainPart = intDomain[1].ToString();
+            AddToDictionary(domainPart,value);
+                      
+            var splitted = domainPart.Split('.').ToList();
+            for(var i=0;i<splitted.Count()-1;i++)
+            {
+                var indexOfNextWord=domainPart.IndexOf(splitted[i+1]);
+                domainPart = domainPart.Remove(0,indexOfNextWord);
+                AddToDictionary(domainPart,value);
+            }
+            
+        }
+        var listOutPut = new List<string>();
+        foreach(var kv in dVDictionary){
+            listOutPut.Add(kv.Value+" "+kv.Key);
+        }
+        return listOutPut;
+    }
+    public void AddToDictionary(string key, int value){
+        if(dVDictionary.ContainsKey(key))
+            dVDictionary[key]+=value;
+        else dVDictionary.Add(key,value);
+    }
+}
