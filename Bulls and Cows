@@ -1,0 +1,32 @@
+public class Solution {
+    public string GetHint(string secret, string guess) {
+        
+        var bulls = 0;
+        var cows = 0;
+        var numLength = guess.Length;
+        var secretDict = new Dictionary<char, int>();
+        var guessDict = new Dictionary<char, int>();
+        for( var i = 0; i < numLength; i++)
+            AddToDictionary(guess[i] , guessDict);
+        for(var i = 0;i < numLength; i++){
+            if(secret[i]==guess[i])
+                bulls++;
+            AddToDictionary(secret[i],secretDict);
+        }
+        
+        foreach(KeyValuePair<char, int> entry in guessDict)
+        {
+            if(secretDict.ContainsKey(entry.Key))
+            {
+             cows+=Math.Min(secretDict[entry.Key], entry.Value);   
+            }
+        }
+        return bulls+"A"+(cows-bulls)+"B";
+    }
+    public void AddToDictionary(char key, Dictionary<char,int> secretDict){
+        if(secretDict.ContainsKey(key)){
+            secretDict[key]++;
+        }
+        else secretDict.Add(key, 1);
+    }
+}
