@@ -1,0 +1,15 @@
+public class Solution {
+    public string LicenseKeyFormatting(string S, int K) {
+        var sNoDash = S.Replace("-","");
+        var sNoDashLen = sNoDash.Length;
+        var firstPartLen = sNoDashLen%K;
+        var startDash = firstPartLen==0?K:firstPartLen;
+        var maxLen = sNoDashLen + (sNoDashLen-1)/K;
+        
+        while(startDash<maxLen){
+            sNoDash = sNoDash.Insert(startDash,"-");
+            startDash+=(K+1);
+        }
+        return sNoDash.ToUpper();
+    }
+}
