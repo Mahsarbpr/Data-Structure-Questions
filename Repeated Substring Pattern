@@ -1,0 +1,6 @@
+public class Solution {
+    public bool RepeatedSubstringPattern(string s) {
+        var str = s + s;
+        return str.Substring(1, str.Length - 2).Contains(s); //First char of input is first char of repeated pattern and last char is last char of it
+    }
+}
