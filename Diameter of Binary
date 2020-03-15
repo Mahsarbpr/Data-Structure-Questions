@@ -1,0 +1,25 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int d;//as diameter
+    public int DiameterOfBinaryTree(TreeNode root) {
+        d=1;
+        MaxDiameterTree(root);
+        return d-1;
+    }
+    public int MaxDiameterTree(TreeNode root){
+        
+        if(root==null) return 0;
+        var l = MaxDiameterTree(root.left);
+        var r = MaxDiameterTree(root.right);
+        d= Math.Max(d,l+r+1);
+        return Math.Max(l,r) + 1;
+    }
+}
