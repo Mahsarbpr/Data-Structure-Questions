@@ -1,0 +1,24 @@
+public class Solution {
+    public string AddStrings(string num1, string num2) {
+            
+        var i = 0;
+        var carry = 0;
+        var num1Len = num1.Length;
+        var num2Len = num2.Length;
+        var maxLen = Math.Max(num1Len, num2Len);
+        var sum = new string[maxLen+1];
+        
+        while(i < num1Len || i < num2Len || carry > 0){
+            
+            var num1Digit = i < num1Len ? num1[num1Len - 1 - i] - '0': 0;
+            var num2Digit = i < num2Len ? num2[num2Len - 1 - i] - '0': 0;
+            
+            var sumOfDigitsAndCarry = num1Digit+num2Digit+carry;
+            sum[maxLen - i] = (sumOfDigitsAndCarry % 10).ToString();
+            carry = sumOfDigitsAndCarry/10;
+            i++;
+        }
+        
+        return string.Join("",sum);
+    }
+}
