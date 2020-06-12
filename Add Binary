@@ -1,0 +1,21 @@
+public class Solution {
+    public string AddBinary(string a, string b) {
+        
+        var aChar = a.ToCharArray();
+        var bChar = b.ToCharArray();
+        var carry = 0;
+        var ai = aChar.Length-1;
+        var bi = bChar.Length-1;
+        var sum = "";
+        while(ai>=0 || bi >=0 || carry >0){
+            
+            var sumOfAllDigits=((ai>=0 ? Char.GetNumericValue(aChar[ai]):0)+(bi>=0 ?Char.GetNumericValue(bChar[bi]):0)+carry);
+            var sumChar =sumOfAllDigits % 2;
+            carry = (int)(sumOfAllDigits/2);
+            sum=sumChar.ToString()+sum;
+            ai--;
+            bi--;
+        }
+        return sum;
+    }
+}
