@@ -1,0 +1,18 @@
+public class Solution {
+    public int FindPairs(int[] nums, int k) {
+        if(k<0) return 0;
+        var set = new HashSet<int>();
+        var lookup = new HashSet<int>();
+        for(var i=0; i< nums.Length; i++){
+            if(lookup.Contains(nums[i]+k))
+            {
+                set.Add(nums[i]);
+            }
+            if(lookup.Contains(nums[i]-k)){
+                set.Add(nums[i]-k);
+            }
+            lookup.Add(nums[i]);
+        }
+        return set.Count;
+    }
+}
