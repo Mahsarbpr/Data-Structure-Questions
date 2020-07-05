@@ -1,0 +1,22 @@
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+        if(nums==null || nums.Length == 0 || nums.Length == 1) return null;
+        var numsLength = nums.Length;
+        var left = new int[numsLength];
+        var right = new int[numsLength];
+        var output = new int[numsLength];
+        right[numsLength-1]=1;
+        left[0]=1;
+        for(var i = 1; i < numsLength; i++){
+            left[i] = left[i-1]*nums[i-1];
+        }
+        for(var i = numsLength -2; i >= 0; i--){
+            right[i] = right[i+1]*nums[i+1];
+        }
+        
+        for(var i = 0; i < numsLength; i++){
+            output[i] = left[i]*right[i];
+        }
+        return output;
+    }
+}
