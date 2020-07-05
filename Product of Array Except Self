@@ -1,3 +1,29 @@
+Second Version O(n) space O(1)
+public class Solution {
+    public int[] ProductExceptSelf(int[] nums) {
+        if(nums==null || nums.Length == 0 || nums.Length == 1) return null;
+        var numsLength = nums.Length;
+        var output = new int[numsLength];
+        output[0]=1;
+        
+        for(var i = 1; i < numsLength; i++){
+            output[i] = output[i-1]*nums[i-1];
+        }
+        var right =1;
+        for(var i = numsLength -1; i >= 0; i--){
+            output[i]=output[i]*right;
+            right *= nums[i];
+        }
+        
+        return output;
+    }
+}
+
+
+
+
+first Version O(n) space O(n)
+
 public class Solution {
     public int[] ProductExceptSelf(int[] nums) {
         if(nums==null || nums.Length == 0 || nums.Length == 1) return null;
