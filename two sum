@@ -1,3 +1,27 @@
+//New Version: for each element we check if we have target-x in the dictionary, also key in Dictionary is the elements instead of indexs(in old version)
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        var hashMap = new Dictionary<int,int>();
+      for(var i=0; i<nums.Length ; i++)
+      {
+        var x = nums[i];
+        var hasElement = hashMap.ContainsKey(target-x);
+        if(hasElement)
+          return new int[]{i,hashMap[target-x]};
+        else{
+          if(hashMap.ContainsKey(x))
+            hashMap.Remove(x);
+          hashMap.Add(x,i);
+        }
+      }
+      return new int[]{};
+    }
+}
+
+
+
+
+//Old version: not very good O wise, because we are searching in values of Dictionary
 public class Solution {
     public int[] TwoSum(int[] nums, int target) {
         
