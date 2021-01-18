@@ -1,0 +1,93 @@
+public class MyEqualityComparer : IEqualityComparer<int[]>
+    {
+        public bool Equals(int[] x, int[] y)
+        {
+            if (x.Length != y.Length)
+            {
+                return false;
+            }
+            for (int i = 0; i < x.Length; i++)
+            {
+                if (x[i] != y[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public int GetHashCode(int[] obj)
+        {
+            int result = 17;
+            for (int i = 0; i < obj.Length; i++)
+            {
+                unchecked
+                {
+                    result = result * 23 + obj[i];
+                }
+            }
+            return result;
+        }
+    }
+public class Solution {
+    
+    public int NumIslands(char[][] grid) {
+        if(grid == null || grid.Length == 0 || grid[0].Length == 0) return 0;
+        var unvisited = new Dictionary<int[],char>(new MyEqualityComparer());
+        var rowSize = grid.Length;
+        var colSize = grid[0].Length;
+        var one = '1';
+        for(var i = 0; i<rowSize ; i++)
+            for(var j = 0; j<colSize ; j++)
+            {
+                if(grid[i][j] == one)
+                    unvisited.Add(new int[]{i,j},one);
+            }
+        var numOfIslands = 0;
+        var islandQ = new Queue<int[]>();
+        while(unvisited.Count > 0){
+            var firstInQueue = unvisited.First().Key;
+            
+            numOfIslands++;
+            islandQ.Enqueue(firstInQueue);
+            unvisited.Remove(firstInQueue);
+            while(islandQ.Count > 0 )
+            {
+                var blah = islandQ.Dequeue();
+                //right
+                var right =blah[1]+1;
+                if( right < colSize && grid[blah[0]][right] == one && unvisited.ContainsKey(new int[]{blah[0],right}))
+                {
+                    var rightIndex =new int[]{blah[0],right}; 
+                    islandQ.Enqueue(rightIndex);
+                    unvisited.Remove(rightIndex);
+                }
+                //left
+                var left = blah[1]-1;
+                if( left >= 0 && grid[blah[0]][left] == one && unvisited.ContainsKey(new int[]{blah[0],left}))
+                {
+                    var leftIndex = new int[]{blah[0],left};
+                    islandQ.Enqueue(leftIndex);
+                    unvisited.Remove(leftIndex);
+                }
+                //up 
+                var up = blah[0]+1 ;
+                if( up < rowSize && grid[up][blah[1]] == one && unvisited.ContainsKey(new int[]{up,blah[1]}))
+                {
+                    var upIndex = new int[]{up , blah[1]};
+                    islandQ.Enqueue(upIndex);
+                    unvisited.Remove(upIndex);
+                }
+                //down
+                var down = blah[0]-1;
+                if( down >=0 && grid[down][blah[1]] == one && unvisited.ContainsKey(new int[]{down, blah[1]}))
+                {
+                    var downIndex = new int[]{down, blah[1]};
+                    islandQ.Enqueue(downIndex);
+                    unvisited.Remove(downIndex);
+                }
+            }
+        }
+        return numOfIslands;
+    }
+}
