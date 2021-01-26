@@ -12,14 +12,23 @@
  * }
  */
 public class Solution {
-    public bool ValidateTree(TreeNode root, int? low, int? high)
-    {
-        if(root == null) return true;
-        if(low!=null && root.val <= low || high!=null && root.val >= high)
-            return false;
-        return ValidateTree(root.left, low, root.val) && ValidateTree(root.right,root.val, high);
-    }
     public bool IsValidBST(TreeNode root) {
-        return ValidateTree(root, null, null);
+        var st = new Stack<TreeNode>();
+        int? prev = null;
+        
+        while(root!=null || st.Count>0)
+        {
+            while(root != null)
+            {
+                st.Push(root);
+                root = root.left;
+            }
+            root = st.Pop();
+            if(prev != null && prev >= root.val) return false;
+            prev = root.val;
+            root = root.right;
+            
+        }
+        return true;
     }
 }
