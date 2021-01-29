@@ -1,0 +1,27 @@
+public class Solution {
+    public TreeNode SortedArrayToBST(int[] nums) {
+       
+            var size = nums.Length;
+            if (nums == null || size == 0) return null;
+            
+            var leftSize = size / 2;
+            var rightSize = size % 2 == 1 ? leftSize : leftSize - 1;
+            var left = new int[leftSize];
+            var right = new int[rightSize];
+            
+            for (var i = 0; i < leftSize; i++)
+            {
+                left[i] = nums[i];
+            }
+            var m = leftSize + 1;
+            for (var j = 0; j < rightSize; j++)
+            {
+                right[j] = nums[m++];
+            }
+
+            var root = new TreeNode(nums[leftSize]);
+            root.left = SortedArrayToBST(left);
+            root.right = SortedArrayToBST(right);
+            return root;
+    }
+}
