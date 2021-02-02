@@ -1,0 +1,76 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode BuildTree(int[] inorder, int[] postorder) {
+            if (inorder == null && postorder == null) return null;
+            if (inorder.Length == 0 || postorder.Length == 0) return null;
+            var rootval = postorder[postorder.Length - 1];
+            var root = new TreeNode(rootval, null, null);
+            if (inorder.Length == 1 && postorder.Length == 1) return root;
+            var indexOfRootInInorder = Array.IndexOf(inorder, rootval);
+            //left
+
+            //int indexOfLastLeftInPostOrder = -1;
+            if (indexOfRootInInorder > 0)
+            {
+
+                var leftInorder = new int[indexOfRootInInorder];//indexOfRoot is also our number of lefts
+                for (var i = 0; i < indexOfRootInInorder; i++)
+                {
+                    leftInorder[i] = inorder[i];
+                }
+
+                int[] leftPostorder;
+                leftPostorder = new int[indexOfRootInInorder];
+                for (var i = 0; i < indexOfRootInInorder ; i++)
+                {
+                    leftPostorder[i] = postorder[i];
+                }
+
+                root.left = BuildTree(leftInorder, leftPostorder);
+            }
+            else root.left = null;
+            //right
+            if (indexOfRootInInorder < inorder.Length - 1)
+            {
+                var rightInorderLength = inorder.Length - indexOfRootInInorder - 1;
+                var rightInorder = new int[rightInorderLength];
+                for (var i = 0; i < rightInorderLength; i++)
+                {
+                    rightInorder[i] = inorder[indexOfRootInInorder + i + 1];
+                }
+                int indexOfFirstRight;
+                if (indexOfRootInInorder == 0)
+                {
+                    //because they are all right, no need to calculate last of left
+                    indexOfFirstRight = 0;
+                }
+                else
+                {
+                    indexOfFirstRight = indexOfRootInInorder ;
+                }
+                int[] rightPostorder;
+
+                var rightPostorderLength = postorder.Length - indexOfFirstRight - 1;
+                rightPostorder = new int[rightPostorderLength];
+                for (var i = 0; i < rightPostorderLength; i++)
+                {
+                    rightPostorder[i] = postorder[i + indexOfFirstRight];
+                }
+                root.right = BuildTree(rightInorder, rightPostorder);
+            }
+            else root.right = null;
+            return root;
+    }
+}
