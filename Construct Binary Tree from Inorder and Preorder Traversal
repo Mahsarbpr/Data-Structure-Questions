@@ -1,0 +1,32 @@
+public class Solution {
+    private int rootIndexPre;
+    private int[] preorder;
+    private int[] inorder;
+    public TreeNode Helper(int left, int right)
+    {
+        if(left> right) return null;
+        rootIndexPre++;
+        var rootIndexIn = Array.IndexOf(inorder,preorder[rootIndexPre]);
+        var root = new TreeNode(preorder[rootIndexPre],null,null);
+        root.left = Helper(left , rootIndexIn-1);
+        root.right = Helper(rootIndexIn+1 , right);
+        return root;
+    }
+    
+    public TreeNode BuildTree(int[] preorder, int[] inorder) {
+        //preorder =>root, left, right
+        //inorder => increasing 
+        //first in preorder is our root
+        this.preorder = preorder;
+        this.inorder = inorder;
+        if(preorder == null && inorder ==null )return null;
+        if(preorder.Length==0 && inorder.Length == 0) return null;
+        
+        rootIndexPre = 0;
+        var rootIndexIn = Array.IndexOf(inorder,preorder[rootIndexPre]);
+        var root = new TreeNode(preorder[rootIndexPre], null , null);
+        root.left = Helper(0, rootIndexIn-1);
+        root.right = Helper(rootIndexIn+1, inorder.Length-1);
+        return root;
+    }
+}
