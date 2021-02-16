@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) return null;
+        var parent = new Dictionary<TreeNode, TreeNode>();
+        var st = new Stack<TreeNode>();
+        st.Push(root);
+        parent.Add(root, null);
+        
+        while(!parent.ContainsKey(p) || !parent.ContainsKey(q))
+        {
+            var node = st.Pop();
+            if(node.left != null)
+            {
+                parent.Add(node.left, node);
+                st.Push(node.left);
+            }
+            if(node.right != null)
+            {
+                parent.Add(node.right,node);
+                st.Push(node.right);
+            }
+        }
+        //now we have both p and q in the dictionary and stack
+        
+        var pParents = new HashSet<TreeNode>();
+        while( p != null )
+        {
+            pParents.Add(p);
+            p = parent[p];
+        }
+        
+        while (!pParents.Contains(q)){
+            q = parent[q];
+        }
+        return q;
+    }
+}
