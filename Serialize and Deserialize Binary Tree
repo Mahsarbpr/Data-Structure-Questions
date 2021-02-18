@@ -1,0 +1,96 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+
+    // Encodes a tree to a single string.
+     public string serialize(TreeNode root)
+            {
+                if (root == null) return "";
+                var blah = new List<string>();
+
+                var q = new Queue<TreeNode>();
+                q.Enqueue(root);
+                var allNull = false;
+                while (q.Count > 0 && !allNull)
+                {
+                    var qSize = q.Count;
+                    var index = 0;
+                    allNull = true;
+                    while (index < qSize )
+                    {
+                        var l = q.Dequeue();
+                        if (l != null)
+                            blah.Add((l.val).ToString());
+                        else blah.Add("null");
+
+                        if (l != null)
+                        {
+                            if (l.left != null || l.right != null) allNull = false;
+                            q.Enqueue(l.left);
+                            q.Enqueue(l.right);
+                        }
+                        index++;
+                    }
+                }
+                if (blah.Last() == "null")
+                    blah.RemoveAt(blah.Count - 1);
+                return String.Join(",", blah);
+            }
+
+            public TreeNode DeserializeArrayToTree(List<string> arr)
+            {
+                if (arr.Count == 0 ||(arr.Count==1 && arr[0]=="")) return null;
+                var i = 0;
+                var root = new TreeNode(Int32.Parse(arr[i]));
+                i++;
+                var q = new Queue<TreeNode>();
+                q.Enqueue(root);
+               
+                while (q.Count > 0)
+                {
+                    var el = q.Dequeue();
+
+                    TreeNode leftNode;
+                    if (i >= arr.Count || arr[i] == "null")
+                        leftNode = null;
+                    else
+                    {
+                        leftNode = new TreeNode(Int32.Parse(arr[i]));
+                        q.Enqueue(leftNode);
+                    }
+                    i++;
+                    TreeNode rightNode;
+                    if (i >= arr.Count || arr[i] == "null")
+                        rightNode = null;
+                    else
+                    {
+                        rightNode = new TreeNode(Int32.Parse(arr[i]));
+                        q.Enqueue(rightNode);
+                    }
+                    i++;
+
+                    el.left = leftNode;
+                    el.right = rightNode;
+
+                }
+                return root;
+            }
+            // Decodes your encoded data to tree.
+            public TreeNode deserialize(string data)
+            {
+                var nodevalues = data.Split(',').ToList();
+                return DeserializeArrayToTree(nodevalues);
+            }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser = new Codec();
+// Codec deser = new Codec();
+// TreeNode ans = deser.deserialize(ser.serialize(root));
