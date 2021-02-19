@@ -1,0 +1,8 @@
+public class Solution {
+    public bool HasPathSum(TreeNode root, int targetSum) {
+        if(root == null) return false;
+        if(root.val == targetSum && root.left ==null && root.right == null) return true;
+        var rest = targetSum - root.val;
+        return HasPathSum(root.left, rest) || HasPathSum(root.right, rest);
+    }
+}
