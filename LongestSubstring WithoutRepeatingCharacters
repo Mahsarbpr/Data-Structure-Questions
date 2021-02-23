@@ -1,25 +1,20 @@
  public int LengthOfLongestSubstring(string s) {
         
-        if(s == "") return 0;
-        
-        var sLength = s.Length;
-        var maxLength=0;
-        for(var i = 0; i< sLength; i++)
-        {
-            var charDict = new HashSet<char>();
-            for(var j = i; j < sLength; j++)
+        if (s == "") return 0;
+            var sLength = s.Length;
+            var charDict = new Dictionary<char, int>();
+            var i = 0;
+            var max = 0;
+            for (var j = 0; j < sLength; j++)
             {
-                if(charDict.Contains(s[j]))
+                if (charDict.ContainsKey(s[j]))
                 {
-                    var localMax = charDict.Count;
-                    maxLength = Math.Max(maxLength, localMax);
-                    break;
+                    i= Math.Max(charDict[s[j]] +1, i);
+                    charDict[s[j]]= j;
                 }
-                else {
-                    charDict.Add(s[j]);
-                    };
+                else 
+                    charDict.Add(s[j], j);
+                max = Math.Max(max, j - i+1);
             }
-            maxLength =Math.Max(maxLength, charDict.Count);
-        }
-        return maxLength;
+            return max;
     }
