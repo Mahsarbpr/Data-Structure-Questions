@@ -1,0 +1,50 @@
+class Program
+    {
+        public static IList<IList<int>> ThreeSum(int[] nums)
+        {
+            var result = new List<IList<int>>();
+            Array.Sort(nums);//sort in array is Array.Sort(arrayName) sort in List is listname.Sort()
+            var comparer = new ListComparer();
+            var uniqueResults = new HashSet<List<int>>(comparer);//how to avoid duplicates and avoid creating IEqualityComparer
+            //it is going to be differnet because it is sorted
+            var numsLength = nums.Length;
+            for(var i=0; i< numsLength -2; i++)
+            {
+                var j = i + 1;
+                var k = numsLength - 1;
+                while (j < k)
+                {   
+                    var sum = nums[i] + nums[j] + nums[k];
+                    if (sum == 0 )
+                    {
+                        var newPair = new List<int> { nums[i], nums[j++], nums[k--] };
+                        if (!uniqueResults.Contains(newPair))
+                        { 
+                            uniqueResults.Add(newPair);
+                            result.Add(newPair);
+                        }
+                    }
+                    else if (sum < 0)//means if we move forward we have a chance to see sum zero
+                        j++;
+                    else k--;
+                }
+            }
+            return result;
+        }
+     }
+     internal class ListComparer: IEqualityComparer<List<int>>
+    {
+        public ListComparer()
+        {
+        }
+
+        public bool Equals([AllowNull] List<int> x, [AllowNull] List<int> y)
+        {
+            return x[0] == y[0] && x[1] == y[1] && x[2] == y[2];
+        }
+
+        public int GetHashCode([DisallowNull] List<int> x)
+        {
+            return x[0].GetHashCode() ^ x[1].GetHashCode() ^ x[2].GetHashCode();
+        }
+    }
