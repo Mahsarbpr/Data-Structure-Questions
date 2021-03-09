@@ -10,8 +10,6 @@ public class Solution {
             {
                 result.AddRange(TwoSum(nums, i));
             }
-            //IList<IList<int>> res = new List<IList<int>>();
-            //res = result.ToList();
             return result;
         }
         public List<IList<int>> TwoSum(int[] nums, int targetIndex)
