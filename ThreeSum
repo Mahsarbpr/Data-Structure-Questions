@@ -1,0 +1,56 @@
+public class Solution {
+     public HashSet<List<int>> uniqueResults;
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            if (nums == null || nums.Length == 1) return new List<IList<int>>();
+            var ec = new EqualityComparer();
+            uniqueResults = new HashSet<List<int>>(ec);
+            var result = new List<IList<int>>();
+            for (var i = 0; i < nums.Length; i++)
+            {
+                result.AddRange(TwoSum(nums, i));
+            }
+            //IList<IList<int>> res = new List<IList<int>>();
+            //res = result.ToList();
+            return result;
+        }
+        public List<IList<int>> TwoSum(int[] nums, int targetIndex)
+        {
+            var numsDict = new HashSet<int>();
+            var result = new List<IList<int>>();
+            var target = -nums[targetIndex];
+            for (var i = targetIndex+1 ; i < nums.Length; i++)
+            {
+                var compliment = target - nums[i];
+                if (numsDict.Contains(compliment))
+                {
+                    var r = new List<int> { nums[i], compliment, -target };
+                    if (!uniqueResults.Contains(r))
+                    {
+                        uniqueResults.Add(r);
+                        result.Add(r);
+                    }
+                }
+                numsDict.Add(nums[i]);
+            }
+            return result;
+        }
+    internal class EqualityComparer: IEqualityComparer<List<int>>
+    {
+        public EqualityComparer()
+        {
+        }
+
+        public bool Equals( List<int> x, List<int> y)
+        {
+            x.Sort();
+            y.Sort();
+            return x[0] == y[0] && x[1] == y[1] && x[2] == y[2];
+        }
+
+        public int GetHashCode( List<int> x)
+        {
+            return x[0].GetHashCode() ^ x[1].GetHashCode() ^ x[2].GetHashCode();
+        }
+    }
+}
