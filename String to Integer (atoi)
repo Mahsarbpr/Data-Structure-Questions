@@ -1,0 +1,45 @@
+ public int MyAtoi(string s) {
+       if (string.IsNullOrEmpty(s)) return 0;
+            var builder = new StringBuilder();
+            var sLength = s.Length;
+            var i = 0;
+            var sign = "+";
+            while (i<sLength && Char.IsWhiteSpace(s[i]))
+                i++;
+            if (i < sLength &&( s[i] == '+' || s[i] == '-'))
+            {
+                sign = s[i].ToString();
+                i++;
+            }
+            for (var j = i; j < sLength; j++)
+            {
+                if (Char.IsDigit(s[j]))
+                    builder.Append(s[j].ToString());
+                else break;
+            }
+            var builderSt = builder.ToString();
+            if (!string.IsNullOrEmpty(builderSt))
+            {
+                var digit = 0;
+                try
+                {
+                    digit = Convert.ToInt32(builderSt);
+                }
+                catch(Exception e)
+                {
+                    if(e.Message.Contains("Value was either too large or too small for an Int32."))
+                    {
+                        if (sign == "+")
+                            return int.MaxValue;
+                        else return int.MinValue;
+                    }       
+                }
+                
+                if (sign == "-")
+                {
+                    digit = -1 * digit;
+                }
+                return digit;
+            }
+            else return 0;
+    }
